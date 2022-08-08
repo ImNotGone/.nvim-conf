@@ -1,41 +1,26 @@
-call plug#begin('~/.config/nvim/plugged')
-    " Theme
-    " Plug 'drewtempelmeyer/palenight.vim'
-    " Bar
-    Plug 'https://github.com/vim-airline/vim-airline'
-    " Autocompletion
-    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    " LSP
-    Plug 'neovim/nvim-lspconfig'
-    " Plug 'hrsh7th/nvim-compe'
-    " Telescope
-    " Plug 'nvim-lua/popup.nvim'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-telescope/telescope.nvim'
-    " gruvBox
-    Plug 'gruvbox-community/gruvbox'
-call plug#end()
+require('gone.options')
+require('gone.plugins')
+require('gone.keymaps')
+require('gone.colorscheme')
+require('gone.plugin_configs.completions')
 
-lua require('gone.options')
-lua require('gone.keymaps')
-
-colorscheme gruvbox
-highlight Normal guibg=none
-
-" to trim all remaining spaces on the file
+-- to trim all remaining spaces on the file
+vim.cmd [[
 function! Trim()
     let l:save = winsaveview()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
-endfun
+endfun ]]
 
+vim.cmd [[
 augroup TrimOnSave
     " clear all of this auto
     autocmd!
     " EXEC Trim before saving
     autocmd BufWritePre * :call Trim()
-augroup END
+augroup END ]]
 
+vim.cmd [[
 augroup Binary
     autocmd!
     " set the 'bin' option to true if the file I'm opening is a .bin
@@ -52,4 +37,4 @@ augroup Binary
     " after saving
     au BufWritePost *.bin,*.out if &bin | :%!xxd
     au BufWritePost *.bin,*.out set nomod | endif
-augroup END
+augroup END ]]
