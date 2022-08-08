@@ -19,7 +19,7 @@ local options = {
     backup = false,             --
     undofile = true,            --
     updatetime = 50,            --
-    undodir = "~/.config/nvim/undodir",
+    -- undodir = "~/.config/nvim/undodir",
     --
     -- tab options
     smartindent = true,         -- indenting 1
@@ -46,3 +46,8 @@ for k, v in pairs(options) do
     -- vim.opt."k" = v
     vim.opt[k] = v
 end
+
+-- adds "-" to the list of keywords, so you can do "dw" on "smth-smth"
+vim.cmd [[set iskeyword+=-]]
+vim.cmd [[set undodir=~/.config/nvim/undodir]]
+
