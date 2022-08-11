@@ -1,47 +1,43 @@
-local cmp_status_ok, cmp = pcall(require, 'cmp')
-if not cmp_status_ok then
-    return
-end
+-- safe load cmp
+local cmp = load_plugin('cmp')
 
-local snip_status_ok, luasnip = pcall(require, 'luasnip')
-if not snip_status_ok then
-    return
-end
+-- safer load luasnip
+local luasnip = load_plugin('luasnip')
 
-require('luasnip/loaders/from_vscode').lazy_load()
+load_plugin('luasnip.loaders.from_vscode').lazy_load()
 
 -- check for backspace
 local check_bs = function()
-    local col = vim.fn.col "." - 1
-    return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+    local col = vim.fn.col '.' - 1
+    return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
 end
 
 local kind_icons = {
-  Text = "",
-  Method = "m",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "",
-  Interface = "",
-  Module = "",
-  Property = "",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = "",
+  Text = '',
+  Method = 'm',
+  Function = '',
+  Constructor = '',
+  Field = '',
+  Variable = '',
+  Class = '',
+  Interface = '',
+  Module = '',
+  Property = '',
+  Unit = '',
+  Value = '',
+  Enum = '',
+  Keyword = '',
+  Snippet = '',
+  Color = '',
+  File = '',
+  Reference = '',
+  Folder = '',
+  EnumMember = '',
+  Constant = '',
+  Struct = '',
+  Event = '',
+  Operator = '',
+  TypeParameter = '',
 }
 
 
@@ -122,6 +118,9 @@ cmp.setup {
     },
 
     sources = {
+        {name = 'nvim_lsp_signature_help'},
+        {name = 'nvim_lsp'},
+        {name = 'nvim_lua'},
         {name = 'luasnip'},
         {name = 'buffer'},
         {name = 'path'},
@@ -131,7 +130,7 @@ cmp.setup {
         select   = false,
     },
     experimental = {
-        ghost_text  = true,
+        ghost_text  = false,
         native_menu = false,
     },
 }

@@ -3,7 +3,7 @@ local options = {
     relativenumber = true,      -- set relative numbered lines
     numberwidth = 4,            -- columns used for number/relativenumber
     signcolumn = "yes",         -- adds an extra column for errors
-
+    -- mouse='a',
     -- search
     hlsearch = true,            -- highlights current search
     incsearch = true,           -- incremental search

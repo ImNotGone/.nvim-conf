@@ -1,40 +1,66 @@
-require('gone.options')
-require('gone.plugins')
-require('gone.keymaps')
-require('gone.colorscheme')
-require('gone.plugin_configs.completions')
+-- safe_load allows for loading without huge errors in case of missing
+-- files or plugins
+local function safe_load(to_load, type)
+    local status_ok, resp = pcall(require, to_load)
+    if not status_ok then
+        vim.notify('Error loading ' .. type .. ': ' .. to_load)
+        return
+    end
+    return resp
+end
+
+function load_file(path)
+    return safe_load(path, 'file')
+end
+
+function load_plugin(plugin)
+    return safe_load(plugin, 'plugin')
+end
+
+-- safe load plugins (./lua/gone/plugins.lua)
+load_file('gone.plugins')
+
+-- safe load options (./lua/gone/options.lua)
+load_file('gone.options')
+
+-- safe load keymaps (./lua/gone/keymaps.lua)
+load_file('gone.keymaps')
+
+-- safe load colorscheme (./lua/gone/colorscheme.lua)
+load_file('gone.colorscheme')
+
+-- safe load plugin_configs (./lua/gone/plugin_configs/init.lua)
+load_file('gone.plugin_configs')
+
 
 -- to trim all remaining spaces on the file
 vim.cmd [[
-function! Trim()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
-endfun ]]
+    function! Trim()
+        let l:save = winsaveview()
+        keeppatterns %s/\s\+$//e
+        call winrestview(l:save)
+    endfun
+]]
 
 vim.cmd [[
-augroup TrimOnSave
-    " clear all of this auto
-    autocmd!
-    " EXEC Trim before saving
-    autocmd BufWritePre * :call Trim()
-augroup END ]]
+    augroup TrimOnSave
+        autocmd!
+        autocmd BufWritePre * :call Trim()
+    augroup end
+]]
 
 vim.cmd [[
-augroup Binary
-    autocmd!
-    " set the 'bin' option to true if the file I'm opening is a .bin
-    au BufReadPre   *.bin,*.out let &bin=1
+    augroup Binary
+        autocmd!
+        au BufReadPre   *.bin,*.out let &bin=1
 
-    " before I start editing set the binary editor
-    au BufReadPost  *.bin,*.out if &bin | :%!xxd
-    au BufReadPost  *.bin,*.out set ft=xxd | endif
+        au BufReadPost  *.bin,*.out if &bin | :%!xxd
+        au BufReadPost  *.bin,*.out set ft=xxd | endif
 
-    " before saving
-    au BufWritePre  *.bin,*.out if &bin | :%!xxd -r
-    au BufWritePre  *.bin,*.out endif
+        au BufWritePre  *.bin,*.out if &bin | :%!xxd -r
+        au BufWritePre  *.bin,*.out endif
 
-    " after saving
-    au BufWritePost *.bin,*.out if &bin | :%!xxd
-    au BufWritePost *.bin,*.out set nomod | endif
-augroup END ]]
+        au BufWritePost *.bin,*.out if &bin | :%!xxd
+        au BufWritePost *.bin,*.out set nomod | endif
+    augroup end
+]]
