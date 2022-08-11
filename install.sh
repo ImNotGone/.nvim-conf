@@ -1,4 +1,4 @@
-# install packages (git, zsh, antibody, neovim, stow, bat)
+# install packages (git, zsh, neovim, xsel (copy/paste ~ nvim), stow, bat)
 
 # stow dotfiles
 # build packages on parent directory (should be ~/)
@@ -13,7 +13,9 @@ command -v zsh | sudo tee -a /etc/shells
 sudo chsh -s $(which zsh) $USER
 
 # install plugins
-nvim --headless +PlugInstall +qall
+
+# install fonts
+mkdir -p ~/.local/share/fonts
 
 # install Oh-My-Zsh & remove the "pre-oh-my-zsh"
 sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
