@@ -29,7 +29,7 @@ local packer = load_plugin('packer')
 packer.init {
     display = {
         open_fn = function()
-            return require('packer.util').float { border = 'rounded' }
+            return load_plugin('packer.util').float { border = 'rounded' }
         end,
     },
 }
@@ -52,7 +52,12 @@ return packer.startup(
             -- for nice icons
             requires = {'kyazdani42/nvim-web-devicons',},
         }
-        use 'windwp/nvim-autopairs'         -- autopairs comp w cmp & treesitter
+        use 'windwp/nvim-autopairs'         -- () autocompletion
+        use 'numToStr/Comment.nvim'
+        use 'akinsho/toggleterm.nvim'       -- toggleterm
+        use 'ahmedkhalf/project.nvim'       -- projects
+
+        use 'goolord/alpha-nvim'
 
         -- Colorsheme
         use 'gruvbox-community/gruvbox'
@@ -88,7 +93,7 @@ return packer.startup(
             run = 'TSUpdate'
         }
         use 'p00f/nvim-ts-rainbow'
-        use 'nvim-treesitter/playground'
+        use 'nvim-treesitter/playground'        -- for creating highlights
         use 'JoosepAlviste/nvim-ts-context-commentstring'
 
         -- Git

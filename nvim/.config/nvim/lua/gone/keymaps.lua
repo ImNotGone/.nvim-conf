@@ -30,6 +30,9 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
+--  Save
+keymap("n", "<C-s>", ":w<CR>", opts)
+
 --  Resize with arrows
 keymap("n", "<C-Up>",    ":resize -2<CR>", opts)
 keymap("n", "<C-Down>",  ":resize +2<CR>", opts)
@@ -45,8 +48,8 @@ keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 --  Leader shortcuts
-keymap("n", "<leader>e", ":Lex 30<CR>", opts)
-keymap("n", "<leader>r", ":!gcc -pedantic -std=c99 -Wall hello.c & ./a.out<CR>", opts)
+keymap("n", "<leader>e", ":NvimTreeOpen<CR>", opts)
+keymap("n", "<leader>r", "<CMD>!gcc -pedantic -std=c99 -Wall %<CR><CMD>!./a.out<CR>", opts)
 
 --  Telescope
 keymap("n", "<leader>ff", "<CMD>Telescope find_files<CR>", opts)
@@ -60,12 +63,15 @@ keymap("n", "<leader>fS", "<CMD>Telescope lsp_workspace_symbols<CR>", opts)
 keymap("n", "<leader>fd", "<CMD>Telescope diagnostics<CR>", opts)
 keymap("n", "<leader>fa", "<CMD>lua vim.lsp.buf.code_action()<CR>", opts)
 keymap("n", "<leader>fk", "<CMD>Telescope keymaps<CR>", opts)
-
+keymap("n", "<leader>fp", "<CMD>Telescope projects<CR>", opts)
 
 -- Insert Mode
 --  Move lines
 keymap("i", "<A-j>", "<ESC>:m .+1<CR>==gi", opts)
 keymap("i", "<A-k>", "<ESC>:m .-2<CR>==gi", opts)
+
+--  Save
+keymap("i", "<C-s>", "<ESC>:w<CR>gi", opts)
 
 -- Visual mode
 --  Indent lines with ">" and "<"
